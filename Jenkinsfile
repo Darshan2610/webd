@@ -17,6 +17,18 @@ pipeline{
         }
     }
     
+    stage('archive'){
+        steps{
+            archiveArtifacts artifacts: 'target/*.war', fingerprint:true
+        }
+    }
+    
+    stage("deploy"){
+        steps{
+            ansiblePlaybook playbook:'ansible/deploy.yml', inventory:'ansible/hosts.ini'
+        }
+    }
+    
     }
     
 
