@@ -10,11 +10,6 @@
         remote_src: no
         
 - name: restart tomcat
-  hosts: tomcat
-  become: yes
-  tasks:
-    - name: restart tomcat
-      ansible.builtin.shell: |
-       /opt/tomcat/bin/shutdown.sh || true
-       sleep 5
-       /opt/tomcat/bin/startup.sh
+  systemd:
+    name: tomcat
+    state: restarted
